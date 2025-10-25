@@ -7,14 +7,12 @@ Conteúdo
 - Contratos (interfaces) principais
 - Implementando um `BaseInput` (ex.: ExcelInput)
 - Implementando um `BaseStorage` (ex.: SQLiteStorage)
-- Como integrar ao adapter (ex.: AtlasCopco)
-- Como integrar à UI
-- Boas práticas e notas
-
+ Como integrar ao adapter
+ Como integrar à UI
+ Boas práticas e notas
 ---
-
-## Visão geral
-
+## Integrando ao adapter
+<!-- Menções específicas a adaptadores concretos foram removidas. Use `input_class` e `input_id_key` para integrar qualquer adapter generically. -->
 O framework separa responsabilidades em três peças principais:
 
 - Authenticator: cuida do login e retorno de uma sessão (driver). (ver `BaseAuthenticator`)
@@ -191,9 +189,9 @@ python3 run_gui.py
 3. Se quiser testar apenas um Input:
 
 ```python
-from adapters.input.excel_input import AtlasCopcoExcelInput
+from adapters.input.excel_input import ExcelInput
 
-inp = AtlasCopcoExcelInput('/caminho/para/arquivo.xlsx', code_column='A')
+inp = ExcelInput('/caminho/para/arquivo.xlsx', code_column='A')
 inp.open()
 for t in inp.get_items():
     print(t)
