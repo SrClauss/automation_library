@@ -119,5 +119,5 @@ Thumbs.db
 *~
 
 # Arquivos de configuração local
-config_local.json
+config.json
 secrets.json
