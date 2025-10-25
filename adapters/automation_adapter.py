@@ -10,6 +10,11 @@ from typing import Optional, Dict, Any
 
 from automation_library.core.interfaces import BaseAuthenticator, BaseExtractor, BaseInput, Session, TaskItem, DataItem
 from typing import Iterable
+try:
+    # importa a implementação concreta, se disponível
+    from adapters.input.excel_input import AtlasCopcoExcelInput
+except Exception:
+    AtlasCopcoExcelInput = None
 from selenium.common.exceptions import TimeoutException, StaleElementReferenceException, NoSuchElementException, WebDriverException
 
 class AtlasCopcoAuthenticator(BaseAuthenticator):
@@ -288,6 +293,9 @@ class AtlasCopcoInput(BaseInput):
 # extractor. Isso permite que a UI ou pipeline monte automaticamente o
 # provedor de entrada e saiba qual campo do TaskItem contém o identificador
 # a ser pesquisado.
-input_class = AtlasCopcoInput
+# Por padrão, apontamos para a implementação Excel se ela existir; caso contrário
+# expomos o placeholder `AtlasCopcoInput` para que a UI ou o integrador possa
+# injetar a implementação correta.
+input_class = AtlasCopcoExcelInput or AtlasCopcoInput
 # Nome da chave no TaskItem que contém o identificador pesquisado pelo extractor
 input_id_key = "code"
