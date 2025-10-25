@@ -1,8 +1,8 @@
 
 {
     "credentials": {
-        "username": "qualuqer@user.com.br",
-        "password": "qualquersenha"
+        "username": "your_username_here",
+        "password": "your_password_here"
     },
     "engine_settings": {
         "num_workers": 5,
@@ -11,41 +11,19 @@
         "save_interval": 15
     },
     "excel_input": {
-        "filepath": "/home/claus/src/joyce/lucasbourbon/Pasta1.xlsx",
+        "filepath": "/path/to/input.xlsx",
         "sheet_name": "Sheet1",
         "code_column": "A"
     },
     "excel_output": {
-        "filepath": "/home/claus/src/joyce/automation_library/resultado_gui.xlsx",
-        "sheet_name": "Resultados",
-        "task_id_key": "row_num",
+        "filepath": "/path/to/output.xlsx",
+        "sheet_name": "Results",
+        "task_id_key": "id",
         "headers": {
-            "row_num": "Linha",
-            "code": "Código",
-            "name": "Nome",
-            "pricing": "Preço",
-            "discount": "Desconto",
-            "pricing_with": "Preço com Impostos",
-            "cofins_tax": "Cofins",
-            "cofins_value": "Cofins Valor",
-            "difalst_tax": "Difal ST",
-            "difalst_value": "Difal ST Valor",
-            "fecop_tax": "Fecop",
-            "fecop_value": "Fecop Valor",
-            "icmi_value": "ICMI Valor",
-            "icms_tax": "ICMS",
-            "icms_value": "ICMS Valor",
-            "ipi_tax": "IPI",
-            "ipi_value": "IPI Valor",
-            "pis_tax": "PIS",
-            "pis_value": "PIS Valor",
-            "st_tax": "ST",
-            "st_value": "ST Valor",
-            "weight": "Peso",
-            "status": "Status",
-            "country_of_origin": "País de Origem",
-            "customs_tariff": "Tarifa Aduaneira",
-            "possibility_to_return": "Possibilidade de Devolução"
+            "id": "ID",
+            "code": "Code",
+            "name": "Name",
+            "status": "Status"
         }
     }
 }
