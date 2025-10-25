@@ -121,3 +121,6 @@ Thumbs.db
 # Arquivos de configuração local
 config.json
 secrets.json
+
+# Pasta de adapters (implementações específicas) - ignorar o diretório inteiro
+adapters/
