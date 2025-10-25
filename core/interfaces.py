@@ -52,6 +52,46 @@ class BaseExtractor(ABC):
         raise NotImplementedError()
 
 
+class BaseInput(ABC):
+    """Interface para provedores de entrada de dados.
+
+    Implementações devem fornecer um iterável de itens a processar. Cada item
+    deve, no mínimo, conter um identificador (chamado conforme o domínio: 'id',
+    'uuid' ou outra chave definida pelo usuário) e opcionalmente uma descrição.
+
+    Atributo de classe sugerido para implementadores:
+    - uses_file: bool = False
+      Indica se o provedor de entrada depende de um arquivo (ex: Excel) para
+      funcionar — permite que a UI mostre controles de arquivo dinamicamente.
+    """
+
+    # Se True, a UI pode exibir controles de arquivo para este input
+    uses_file: bool = False
+
+    @abstractmethod
+    def open(self):
+        """Prepara o provedor de entrada (ex: abrir arquivo ou conectar BD)."""
+        raise NotImplementedError()
+
+    @abstractmethod
+    def get_items(self) -> Iterable[TaskItem]:
+        """Retorna um iterable de TaskItem.
+
+        Cada TaskItem deve conter pelo menos:
+        - uma chave identificadora ('id' ou 'uuid' ou outra acordada)
+        - opcionalmente 'description' ou outros metadados
+
+        A UI e o pipeline assumirão que para cada item retornado haverá uma
+        saída (mesmo que nula) produzida e salva pelo storage.
+        """
+        raise NotImplementedError()
+
+    @abstractmethod
+    def close(self):
+        """Fecha/release recursos se necessário."""
+        raise NotImplementedError()
+
+
 class BaseStorage(ABC):
     """Interface para classes de persistência de dados.
 
