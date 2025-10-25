@@ -8,7 +8,8 @@ from selenium.common.exceptions import TimeoutException, StaleElementReferenceEx
 import queue
 from typing import Optional, Dict, Any
 
-from automation_library.core.interfaces import BaseAuthenticator, BaseExtractor, Session, TaskItem, DataItem
+from automation_library.core.interfaces import BaseAuthenticator, BaseExtractor, BaseInput, Session, TaskItem, DataItem
+from typing import Iterable
 from selenium.common.exceptions import TimeoutException, StaleElementReferenceException, NoSuchElementException, WebDriverException
 
 class AtlasCopcoAuthenticator(BaseAuthenticator):
@@ -257,3 +258,36 @@ class AtlasCopcoExtractor(BaseExtractor):
         except Exception as e:
             _log(f"❌ ERRO GRAVE: {str(e)}")
             return {"code": product_code, "name": "", "status": f"ERRO GRAVE: {str(e)}", "row_num": row_num}
+
+
+class AtlasCopcoInput(BaseInput):
+    """Placeholder BaseInput para o adaptador AtlasCopco.
+
+    Esta classe serve como ponto de integração entre o adaptador específico
+    (que contém o extractor e o authenticator) e os provedores genéricos do
+    framework. Implementações concretas (ExcelInput, CSVInput, DBInput, etc.)
+    devem herdar desta classe e implementar `open`, `get_items` e `close`.
+
+    Atributos padrões:
+    - uses_file: indica se o input depende de um arquivo (ex: Excel/CSV).
+    """
+
+    uses_file: bool = False
+
+    def open(self):
+        raise NotImplementedError("AtlasCopcoInput.open() must be implemented by a concrete input provider")
+
+    def get_items(self) -> Iterable[TaskItem]:
+        raise NotImplementedError("AtlasCopcoInput.get_items() must be implemented by a concrete input provider")
+
+    def close(self):
+        raise NotImplementedError("AtlasCopcoInput.close() must be implemented by a concrete input provider")
+
+
+# Exponha o input padrão (placeholder) e a chave identificadora usada pelo
+# extractor. Isso permite que a UI ou pipeline monte automaticamente o
+# provedor de entrada e saiba qual campo do TaskItem contém o identificador
+# a ser pesquisado.
+input_class = AtlasCopcoInput
+# Nome da chave no TaskItem que contém o identificador pesquisado pelo extractor
+input_id_key = "code"
